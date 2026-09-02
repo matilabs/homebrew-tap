@@ -21,7 +21,7 @@ cask "mati" do
   # and brew's idea of the version does not drift from what the app is actually
   # running.
   auto_updates true
-  depends_on macos: ">= :big_sur"
+  depends_on macos: :big_sur
 
   app "MatiAI.app"
 
