@@ -36,12 +36,16 @@ class Mati < Formula
 
   def install
     binary = Hardware::CPU.arm? ? "mati-darwin-arm64" : "mati-darwin-amd64"
-    downloaded = Pathname.pwd/binary
-    downloaded = Pathname.pwd/File.basename(cached_download) unless downloaded.exist?
+
+    # A URL with no archive extension is staged under a cache-keyed name, not
+    # the name it had on the server, so the artifact is found by being the only
+    # file here rather than by a name this formula guesses.
+    downloaded = buildpath.children.find(&:file?)
+    odie "the download did not arrive" if downloaded.nil?
 
     # Fetch the detached signature beside the artifact and verify before install.
     # Fail closed: no signature, or one that does not check out, stops here.
-    signature = Pathname.pwd/"#{binary}.minisig"
+    signature = buildpath/"#{binary}.minisig"
     system "curl", "-fsSL", "-o", signature, "#{BASE}/#{binary}.minisig"
     system "minisign", "-V", "-P", MINISIGN_PUBLIC_KEY, "-x", signature, "-m", downloaded
 
