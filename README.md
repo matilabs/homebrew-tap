@@ -3,13 +3,10 @@
 The `mati` command and the MatiAI desktop app.
 
 ```sh
-brew tap matilabs/tap https://gitlab.com/matilabs/homebrew-tap.git
+brew tap matilabs/tap
 brew install matilabs/tap/mati        # the command
 brew install --cask matilabs/tap/mati # the app
 ```
-
-The URL is needed on the first command because this tap lives on GitLab, and
-Homebrew's short form assumes GitHub. After that, the short name works.
 
 ## What gets installed
 
